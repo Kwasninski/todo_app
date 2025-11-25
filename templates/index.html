@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Zadania do wykonania</title>
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Zadania do wykonania</h1>
+
+    {% if tasks|length < 1 %}
+    <h3>Brak zadań do wykonania...dodaj jakieś!</h3>
+    {% else %}
+    <table>
+        <tr>
+            <th>Zadania</th>
+            <th>Dodane</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{task.content}}</td>
+                <td>{{task.date_created.strftime("%d-%m-%Y")}}</td>
+                <td>
+                    <a href="/delete/{{task.id}}">Usuń</a>
+                    <br>
+                    <a href="/update/{{task.id}}">Edytuj</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <form action="/" method="POST">
+        <input type="text" name="content" id="content">
+        <input type="submit" value="add task", id="btn_add">
+    </form>
+</div>
+
+{% endblock %}

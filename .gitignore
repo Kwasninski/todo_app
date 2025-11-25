@@ -1,0 +1,11 @@
+# Śmieci systemowe
+.DS_Store
+
+# Wirtualne środowisko Python
+venv/
+
+# Konfiguracja z sekretami (np. klucze API)
+instance/
+
+# Pliki testowe (opcjonalnie, jeśli testing.html to tylko eksperyment)
+testing.html
