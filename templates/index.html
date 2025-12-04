@@ -8,7 +8,8 @@
 
 {% block body %}
 <div class="content">
-    <h1>Zadania do wykonania</h1>
+    <h1>Zadania do wykonania📋</h1>
+    <a href="/for_home">Lista zakupów do domu</a>
 
     {% if tasks|length < 1 %}
     <h3>Brak zadań do wykonania...dodaj jakieś!</h3>
@@ -16,8 +17,8 @@
     <table>
         <tr>
             <th>Zadania</th>
-            <th>Dodane</th>
-            <th>Actions</th>
+            <th>Data dodania</th>
+            <th>Akcje</th>
         </tr>
         {% for task in tasks %}
             <tr>
@@ -34,7 +35,7 @@
     {% endif %}
     <form action="/" method="POST">
         <input type="text" name="content" id="content">
-        <input type="submit" value="add task", id="btn_add">
+        <input type="submit" value="Dodaj zadanie", id="btn_add">
     </form>
 </div>
 

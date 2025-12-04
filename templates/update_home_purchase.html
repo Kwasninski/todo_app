@@ -1,14 +1,14 @@
 {% extends 'base.html'%}
 
 {% block head %}
-    <title>Edytuj zadanie</title>
+    <title>Edytuj zakup do domu</title>
 {% endblock %}
 
 {% block body %}
     <div class="content">
-        <h1>Edytuj zadanie</h1>
+        <h1>Edytuj zakup do domu</h1>
         <form action="" method="POST">
-            <input type="text" name="content" id="content" value="{{task.content}}">
+            <input type="text" name="description" id="description" value="{{home_purchase.description}}">
             <input type="submit" value="Zapisz" id="btn_update">
         </form>
     </div>

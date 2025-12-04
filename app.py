@@ -22,6 +22,17 @@ class Mytask(db.Model):
     def __repr__(self) -> str:
         return f"Task {self.id}"
     
+
+# Define the HomePurchase model ~ row of data
+class HomePurchase(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(100), nullable=False)
+    bought = db.Column(db.Integer, default=0)
+    date_added = db.Column(db.DateTime, default=datetime.now)
+
+    def __repr__(self) -> str:
+        return f"Home Product {self.id}"
+    
 with app.app_context():
     db.create_all()
 
@@ -71,7 +82,58 @@ def update(id):
             return f"there was an issue updating your task: {e}"
     else:
         return render_template('update.html', task=task)
+    
 
+
+ #### home purchases part ####   
+
+
+
+#Route for "to buy for home" page
+@app.route("/for_home", methods=["GET", "POST"])
+def to_buy_for_home():
+    # add new home purchase
+    if request.method == "POST":
+        current_home_purchase = request.form['description']
+        new_home_purchase = HomePurchase(description=current_home_purchase)
+        try:
+            db.session.add(new_home_purchase)
+            db.session.commit()
+            return redirect("/for_home")
+        except Exception as e:
+            return f"There was an issue adding your home purchase: {e}"
+    # see all home purchases
+    else:
+        home_purchases = HomePurchase.query.order_by(HomePurchase.date_added).all()
+        return render_template("for_home.html", home_purchases=home_purchases)
+
+
+
+#delete a home purchase
+@app.route("/for_home/delete/<int:id>")
+def delete_home_purchase(id):
+    home_purchase_to_delete = HomePurchase.query.get_or_404(id)
+    try:
+        db.session.delete(home_purchase_to_delete)
+        db.session.commit()
+        return redirect("/for_home")
+    except Exception as e:
+        return f"There was a problem deleting that home purchase: {e}"
+    
+    
+#update a home purchase
+@app.route("/for_home/update/<int:id>", methods=["GET", "POST"])
+def update_home_purchase(id):
+    home_purchase = HomePurchase.query.get_or_404(id)
+    if request.method == "POST":
+        home_purchase.description = request.form['description']
+        try:
+            db.session.commit()
+            return redirect("/for_home")
+        except Exception as e:
+            return f"There was a problem updating your home purchase: {e}"
+    else:
+        return render_template("update_home_purchase.html", home_purchase=home_purchase)
 
 if __name__ == "__main__":
     app.run(debug=True)

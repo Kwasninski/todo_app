@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<title>Zakupy domowe</title>
+
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Zakupy do domu🏡</h1>
+    <a href="/">Wróć do listy zadań</a>
+
+    {% if home_purchases|length < 1 %}
+    <h3>Lista zakupów domowych pusta...!</h3>
+    {% else %}
+    <table>
+        <tr>
+            <th>Zakupy</th>
+            <th>Data dodania</th>
+            <th>Akcje</th>
+        </tr>
+        {% for home_purchase in home_purchases %}
+            <tr>
+                <td>{{home_purchase.description}}</td>
+                <td>{{home_purchase.date_added.strftime("%d-%m-%Y")}}</td>
+                <td>
+                    <a href="/for_home/delete/{{home_purchase.id}}">Usuń</a>
+                    <br>
+                    <a href="/for_home/update/{{home_purchase.id}}">Edytuj</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <form action="/for_home" method="POST">
+        <input type="text" name="description" id="description">
+        <input type="submit" value="Dodaj zakup do domu", id="btn_add">
+    </form>
+</div>
+
+{% endblock %}
