@@ -44,8 +44,9 @@ with app.app_context():
 def index():
     # add task
     if request.method == 'POST':
-        current_task= request.form['content']
-        new_task = Mytask(content=current_task)
+        current_task_content = request.form['content']
+        current_task_assignee = request.form['assignee']
+        new_task = Mytask(content=current_task_content, assignee=current_task_assignee)
         try:
             db.session.add(new_task)
             db.session.commit()
@@ -77,6 +78,7 @@ def update(id):
     task = Mytask.query.get_or_404(id)
     if request.method == 'POST':
         task.content = request.form['content']
+        task.assignee = request.form['assignee']
         try:
             db.session.commit()
             return redirect('/')

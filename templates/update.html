@@ -9,6 +9,12 @@
         <h1>Edytuj zadanie</h1>
         <form action="" method="POST">
             <input type="text" name="content" id="content" value="{{task.content}}">
+                <label for="assignee">Przypisz osobę</label>
+                    <select name="assignee" id="assignee" value="{{task.assignee}}">
+                        <option value=""></option>                        
+                        <option value="Zuza">Zuza</option>
+                        <option value="Seba">Seba</option>
+                    </select>
             <input type="submit" value="Zapisz" id="btn_update">
         </form>
     </div>
