@@ -9,6 +9,11 @@
         <h1>Edytuj zakup do domu</h1>
         <form action="" method="POST">
             <input type="text" name="description" id="description" value="{{home_purchase.description}}">
+                <label for="who_buys">Przypisz osobę</label>
+                    <select name="who_buys" id="who_buys" value="{{home_purchase.who_buys}}">
+                        <option value="Zuza">Zuza</option>
+                        <option value="Seba">Seba</option>
+                    </select>
             <input type="submit" value="Zapisz" id="btn_update">
         </form>
     </div>

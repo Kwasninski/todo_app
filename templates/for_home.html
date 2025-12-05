@@ -19,6 +19,7 @@
             <th>Zakupy</th>
             <th>Data dodania</th>
             <th>Akcje</th>
+            <th>Kto</th>
         </tr>
         {% for home_purchase in home_purchases %}
             <tr>
@@ -29,12 +30,19 @@
                     <br>
                     <a href="/for_home/update/{{home_purchase.id}}">Edytuj</a>
                 </td>
+                <td>{{home_purchase.who_buys}}</td>
             </tr>
         {% endfor %}
     </table>
     {% endif %}
     <form action="/for_home" method="POST">
         <input type="text" name="description" id="description">
+        <label for="who_buys">Przypisz osobę</label>
+        <select name="who_buys" id="who_buys">
+            <option value=""></option>
+            <option value="Zuza">Zuza</option>
+            <option value="Seba">Seba</option>
+        </select>
         <input type="submit" value="Dodaj zakup do domu", id="btn_add">
     </form>
 </div>

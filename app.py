@@ -18,6 +18,7 @@ class Mytask(db.Model):
     content = db.Column(db.String(100), nullable=False)
     completed = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=datetime.now)
+    assignee = db.Column(db.String, default="", nullable=False)
 
     def __repr__(self) -> str:
         return f"Task {self.id}"
@@ -29,6 +30,7 @@ class HomePurchase(db.Model):
     description = db.Column(db.String(100), nullable=False)
     bought = db.Column(db.Integer, default=0)
     date_added = db.Column(db.DateTime, default=datetime.now)
+    who_buys = db.Column(db.String, default="", nullable=False)
 
     def __repr__(self) -> str:
         return f"Home Product {self.id}"
@@ -94,8 +96,9 @@ def update(id):
 def to_buy_for_home():
     # add new home purchase
     if request.method == "POST":
-        current_home_purchase = request.form['description']
-        new_home_purchase = HomePurchase(description=current_home_purchase)
+        current_home_purchase_description = request.form['description']
+        current_home_purchase_who_buys = request.form['who_buys']
+        new_home_purchase = HomePurchase(description=current_home_purchase_description, who_buys=current_home_purchase_who_buys)
         try:
             db.session.add(new_home_purchase)
             db.session.commit()
@@ -120,13 +123,14 @@ def delete_home_purchase(id):
     except Exception as e:
         return f"There was a problem deleting that home purchase: {e}"
     
-    
+
 #update a home purchase
 @app.route("/for_home/update/<int:id>", methods=["GET", "POST"])
 def update_home_purchase(id):
     home_purchase = HomePurchase.query.get_or_404(id)
     if request.method == "POST":
         home_purchase.description = request.form['description']
+        home_purchase.who_buys = request.form['who_buys']
         try:
             db.session.commit()
             return redirect("/for_home")
